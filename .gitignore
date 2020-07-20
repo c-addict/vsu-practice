@@ -1,0 +1,27 @@
+#byte-compiled/optimized/DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+#c extensions
+*.so
+
+#ide files
+.idea/
+
+#installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+#django staff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+#environment
+venv/
+
+#cython debug symbols
+cython_debug/
