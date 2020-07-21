@@ -4,6 +4,11 @@ from .models import Author, Genre, Book, BookInstance, Language
 
 # Register your models here.
 
+
+class BookInstanceInline(admin.TabularInline):
+    model = BookInstance
+
+
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
 
@@ -17,9 +22,7 @@ class BookAdmin(admin.ModelAdmin):
 
     list_display = ('title', 'author', 'display_genre')
 
-
-class BookInstanceInline(admin.TabularInline):
-    model = BookInstance
+    inlines = [BookInstanceInline]
 
 
 @admin.register(BookInstance)
@@ -37,8 +40,6 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('status', 'due_back')
         }),
     )
-
-    inlines = [BookInstanceInline]
 
 
 #admin.site.register(Book)
