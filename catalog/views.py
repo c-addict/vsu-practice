@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+<<<<<<< HEAD
 from django.contrib.auth.decorators import permission_required
 from .forms import RenewBookForm
 from django.shortcuts import get_object_or_404
@@ -10,6 +11,8 @@ from django.urls import reverse
 import datetime
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+=======
+>>>>>>> fc78456e01956b4bcf6a679bc4af537d7be173ed
 
 
 # Create your views here.

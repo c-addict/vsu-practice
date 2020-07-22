@@ -18,6 +18,7 @@
     <li><strong>Authors:</strong> {{ num_of_authors }}</li>
   </ul>
 
+<<<<<<< HEAD
     <p>You have visited this page {{ num_of_visits }}
         {% if num_visits == 1 %}
             time
@@ -25,5 +26,8 @@
             times
         {% endif %}.
     </p>
+=======
+    <p>You have visited this page {{ num_of_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+>>>>>>> fc78456e01956b4bcf6a679bc4af537d7be173ed
 
 {% endblock %}
