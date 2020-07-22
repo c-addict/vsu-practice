@@ -2,6 +2,14 @@ from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import permission_required
+from .forms import RenewBookForm
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import datetime
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -46,6 +54,27 @@ class BookListView(generic.ListView):
         return context
 
 
+@permission_required('catalog.can_mark_returned')
+def renew_book_librarian(request, pk):
+
+    book_inst = get_object_or_404(BookInstance, pk=pk)
+    if request.method == 'POST':
+        form = RenewBookForm(request.POST)
+        if form.is_valid():
+            book_inst.due_back = form.cleaned_data['renewal_date']
+            book_inst.save()
+            return HttpResponseRedirect(reverse('all-borrowed'))
+    else:
+        proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+        form = RenewBookForm(initial={
+            'renewal_date': proposed_renewal_date,
+        })
+    return render(request, 'html/book_renew_librarian.html', {
+        'form': form,
+        'bookinst': book_inst,
+    })
+
+
 def index(request):
 
     num_of_books = Book.objects.all().count()
@@ -63,3 +92,25 @@ def index(request):
         'num_of_visits': request.session['num_of_visits'],
     })
 
+
+class AuthorCreate(CreateView):
+
+    model = Author
+    fields = '__all__'
+
+
+class AuthorUpdate(UpdateView):
+
+    model = Author
+    fields = [
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'date_of_death',
+    ]
+
+
+class AuthorDelete(DeleteView):
+
+    model = Author
+    success_url = reverse_lazy('authors')
