@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-<<<<<<< HEAD
 from django.contrib.auth.decorators import permission_required
 from .forms import RenewBookForm
 from django.shortcuts import get_object_or_404
@@ -11,8 +10,7 @@ from django.urls import reverse
 import datetime
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-=======
->>>>>>> fc78456e01956b4bcf6a679bc4af537d7be173ed
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -55,6 +53,17 @@ class BookListView(generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
         return context
+
+
+def create_user(request):
+    if request.method == 'GET':
+        return render(request, 'html/create_user.html', context={
+
+        })
+    else:
+        user = User.objects.create_user()
+        user.save()
+
 
 
 @permission_required('catalog.can_mark_returned')

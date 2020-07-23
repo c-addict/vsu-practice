@@ -18,3 +18,7 @@ class RenewBookForm(forms.Form):
             raise ValidationError(ugettext_lazy('Invalid date'))
 
         return date
+
+
+class CreateUserForm(forms.Form):
+    pass
